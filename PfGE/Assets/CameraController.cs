@@ -10,6 +10,12 @@ public class CameraController : MonoBehaviour
     private float yaw = 0.0f;
     private float pitch = 0.0f;
 
+    public float sensitivity = 2f;
+
+    public float cameraHeight;
+    public float cameraDistance;
+    public float cameraHorizontalOffset;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,17 +25,25 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        yaw += Input.GetAxis("Mouse X");
-        pitch -= Input.GetAxis("Mouse Y");
+    	//keep the cursor invisible 
+    	Cursor.visible = false;
+
+    	//move the pitch and yaw based on the mouse movement
+        yaw += Input.GetAxis("Mouse X")*sensitivity;
+        pitch -= Input.GetAxis("Mouse Y")*sensitivity;
+
+        //make sure the camera doesn't go upside down
         pitch = Mathf.Clamp(pitch, -90f, 90f);
+
+        //move the camera 
         cam.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
 
+        //raycast to see if the camera is blocked, if so, place camera as far out as it can go before hitting an object
         RaycastHit hit;
-        if (Physics.Raycast(subject.transform.position+Vector3.up*1.5f, -cam.transform.forward, out hit, 3)) {
+        if (Physics.Raycast((subject.transform.position+subject.transform.right*cameraHorizontalOffset)+Vector3.up*cameraHeight, -cam.transform.forward, out hit, cameraDistance)) {
             cam.transform.position = hit.point;
         } else {
-            cam.transform.position = (subject.transform.position+Vector3.up*1.5f) + (-cam.transform.forward)*3;
+            cam.transform.position = ((subject.transform.position+subject.transform.right*cameraHorizontalOffset)+Vector3.up*cameraHeight) + (-cam.transform.forward)*cameraDistance;
         }
-        //cam.transform.position = subject.transform.position + (Vector3.right*.75f) + (Vector3.up*1.75f) + (Vector3.back*3.0f);
     }
 }
