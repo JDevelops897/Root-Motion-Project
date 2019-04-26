@@ -6,7 +6,7 @@ public class AlignRotation : MonoBehaviour
 {
     
     private Transform target;
-    private float speed = 10f;
+    private float speed = 20f;
 
     private void Start() 
     {

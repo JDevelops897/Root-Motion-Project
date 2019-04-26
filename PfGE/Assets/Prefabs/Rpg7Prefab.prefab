@@ -109,6 +109,7 @@ Transform:
   - {fileID: 7284657927632735635}
   - {fileID: 5658782186087941510}
   - {fileID: 6960673979538004282}
+  - {fileID: 3000526693645445222}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -124,12 +125,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6336350369d5e244b8c130faacb21c14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 2
   automatic: 0
   fireRate: 0
+  gunName: RPG
+  gunImage: {fileID: 21300000, guid: 99a3023639fca7048a947ab141596b4d, type: 3}
+  ammo: 1
   maxAmmo: 1
   accuracy: 10
+  reloadTime: 90
+  reloading: 0
+  bullet: {fileID: 601405944047893781, guid: 0d01959afb9153f4ebab46d7cbbf1795, type: 3}
+  bulletPoint: {fileID: 3000526693645445222}
   leftHandIK: {fileID: 5658782186087941510}
   rightHandIK: {fileID: 6960673979538004282}
+  gunObject: {fileID: 0}
+  r: {fileID: 6758487705072687556}
 --- !u!114 &8622338500724937430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,12 +178,42 @@ Transform:
   m_GameObject: {fileID: 3892648701046208423}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20.000004, y: 20, z: 20.000004}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_Children:
   - {fileID: 7151378050955105825}
   - {fileID: 1758665666766901598}
   m_Father: {fileID: 5736818876841240115}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4370185818838402647
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3000526693645445222}
+  m_Layer: 0
+  m_Name: BulletPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3000526693645445222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4370185818838402647}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.47, y: 0.64, z: 12.97}
+  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_Children: []
+  m_Father: {fileID: 5736818876841240115}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5596299504780227490
 GameObject:
@@ -186,7 +227,7 @@ GameObject:
   - component: {fileID: 3964064184327608766}
   - component: {fileID: 6758487705072687556}
   m_Layer: 0
-  m_Name: rpg 7 bullet
+  m_Name: rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

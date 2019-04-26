@@ -20,7 +20,9 @@ public class WeaponAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (equippedWeaponObject != null) {
+        	Debug.DrawRay(equippedWeaponObject.transform.position, equippedWeaponObject.transform.forward*2, Color.red);
+        }
     }
 
     public void Equip(GameManager.WeaponType weaponID) {
@@ -30,6 +32,9 @@ public class WeaponAgent : MonoBehaviour
     	GameObject weapon = GameManager.instance.weaponPrefabs[(int) weaponID];
     	equippedWeaponObject = Instantiate(weapon);
     	equippedWeapon = equippedWeaponObject.GetComponent<Weapon>();
+    	equippedWeapon.type = weaponID;
+    	equippedWeapon.gunObject = equippedWeaponObject;
+
     	equippedWeaponObject.transform.SetParent (attachmentPoint);
 
     	attachmentPoint.transform.localPosition = GameManager.instance.attachmentPointOffsets[(int) weaponID];

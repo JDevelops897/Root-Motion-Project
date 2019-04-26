@@ -8,16 +8,26 @@ public class Pawn : MonoBehaviour
 {
 	private Animator anim;
 	private WeaponAgent wep;
+	private Rigidbody rb;
 	public Slider healthBarUI;
 
 	public float maxHealth = 100;
 	public float health = 100;
+
+	public bool isGrounded = true;
 
     // Start is called before the first frame update
     void Start()
     {
 		anim = GetComponent<Animator>();
 		wep = GetComponent<WeaponAgent>();
+		rb = GetComponent<Rigidbody>();
+    }
+
+    void Update() {
+    	isGrounded = (Physics.Raycast(transform.position+transform.up*.1f, -transform.up, .35f));
+    	if (isGrounded) rb.velocity = Vector3.zero;
+    	anim.applyRootMotion = isGrounded;
     }
 
     public void Move(Vector3 movement) {
@@ -28,6 +38,13 @@ public class Pawn : MonoBehaviour
     public void TakeDamage(float damage) {
     	health = Mathf.Clamp(health-damage, 0, maxHealth);
     	healthBarUI.value = health;
+    	if (health == 0) {
+    		Die();
+    	}
+    }
+
+    public void Die() {
+    	Destroy(this.gameObject);
     }
 
     protected virtual void OnAnimatorIK() {

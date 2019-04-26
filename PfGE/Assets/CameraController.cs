@@ -40,10 +40,12 @@ public class CameraController : MonoBehaviour
 
         //raycast to see if the camera is blocked, if so, place camera as far out as it can go before hitting an object
         RaycastHit hit;
-        if (Physics.Raycast((subject.transform.position+subject.transform.right*cameraHorizontalOffset)+Vector3.up*cameraHeight, -cam.transform.forward, out hit, cameraDistance)) {
-            cam.transform.position = hit.point;
-        } else {
-            cam.transform.position = ((subject.transform.position+subject.transform.right*cameraHorizontalOffset)+Vector3.up*cameraHeight) + (-cam.transform.forward)*cameraDistance;
-        }
+        if (subject) {
+	        if (Physics.Raycast((subject.transform.position+subject.transform.right*cameraHorizontalOffset)+Vector3.up*cameraHeight, -cam.transform.forward, out hit, cameraDistance)) {
+	            cam.transform.position = hit.point;
+	        } else {
+	            cam.transform.position = ((subject.transform.position+subject.transform.right*cameraHorizontalOffset)+Vector3.up*cameraHeight) + (-cam.transform.forward)*cameraDistance;
+	        }
+	    }
     }
 }

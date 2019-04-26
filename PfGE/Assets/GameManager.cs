@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 		RPG
 	};
 
+	public List<GameObject> powerUps;
+
 	public List<GameObject> weaponPrefabs;
 
 	public List<Vector3> attachmentPointOffsets;
