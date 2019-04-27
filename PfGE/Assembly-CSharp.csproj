@@ -55,6 +55,7 @@
   <ItemGroup>
      <Compile Include="Assets\AlignRotation.cs" />
      <Compile Include="Assets\CameraController.cs" />
+     <Compile Include="Assets\Enemy.cs" />
      <Compile Include="Assets\EnemySpawner.cs" />
      <Compile Include="Assets\Explosion.cs" />
      <Compile Include="Assets\FaceCamera.cs" />
@@ -64,6 +65,7 @@
      <Compile Include="Assets\PowerUp.cs" />
      <Compile Include="Assets\PowerUpSpawner.cs" />
      <Compile Include="Assets\Projectile.cs" />
+     <Compile Include="Assets\RagdollControls.cs" />
      <Compile Include="Assets\Weapon.cs" />
      <Compile Include="Assets\WeaponAgent.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">

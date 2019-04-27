@@ -8,12 +8,17 @@ public class FaceCamera : MonoBehaviour
 
     private void Start() 
     {
-    	target = GameManager.instance.mainCamera.transform;
+    	if (GameManager.instance.mainCamera)
+    		target = GameManager.instance.mainCamera.transform;
     }
 
     private void Update()
     {
-		transform.eulerAngles = target.eulerAngles;
+    	if (target) 
+			transform.eulerAngles = target.eulerAngles;
+		else if (GameManager.instance.mainCamera)
+			target = GameManager.instance.mainCamera.transform;
+
     }
 
 }

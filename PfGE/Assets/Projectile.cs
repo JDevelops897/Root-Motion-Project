@@ -12,6 +12,8 @@ public class Projectile : MonoBehaviour
 	public float speed;
 	public float damage;
 
+	public GameObject sender;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,11 +23,12 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    	if (GameManager.instance.paused) return;
         tf.Translate((Vector3.forward*speed)*Time.deltaTime);
     }
 
     void OnTriggerEnter(Collider c) {
-    	if (c.gameObject.tag == "Powerup") {
+    	if (c.gameObject.tag == "Powerup" || c.gameObject == sender) {
     		return;
     	}
     	if (c.gameObject.tag == "Pawn") {

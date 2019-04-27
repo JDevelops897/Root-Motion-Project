@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
 
     public GameObject ex;
 
+    public int coins = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +46,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    	if (GameManager.instance.paused) return;
     	if (!pawn) return;
     	isGrounded = pawn.isGrounded;
     	//slow down the movement at a specific rate
@@ -58,6 +61,17 @@ public class PlayerController : MonoBehaviour
         spd = walkSpeed;
         if (Input.GetKey(KeyCode.LeftShift)) {
             spd = sprintSpeed;
+        }
+
+        if (Input.GetMouseButton(1)) {
+	        if (cam.GetComponent<Camera>().fieldOfView > 50) {
+	        	cam.GetComponent<Camera>().fieldOfView -= .5f; 
+	        }
+	        if (spd != sprintSpeed) spd = spd/2;
+        } else {
+        	if (cam.GetComponent<Camera>().fieldOfView < 60) {
+	        	cam.GetComponent<Camera>().fieldOfView += .5f; 
+	        }
         }
 
         //clamp the speed 
@@ -105,7 +119,7 @@ public class PlayerController : MonoBehaviour
         }
 
         if (weaponAgent.equippedWeaponObject != null && spd != sprintSpeed) {
-           	weaponAgent.equippedWeaponObject.GetComponent<AlignRotation>().Align();
+           	weaponAgent.equippedWeaponObject.GetComponent<AlignRotation>().Align(cam.transform.rotation);
         }
 
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.E)) {
@@ -136,7 +150,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded) {
         	if (pawn) {
 	        	pawn.transform.position += Vector3.up*.45f;
-	        	pawn.GetComponent<Rigidbody>().velocity += (new Vector3(xMove, jumpPower, zMove));
+	        	pawn.GetComponent<Rigidbody>().velocity += (new Vector3(0, jumpPower, 0));
 	        }
 	    }
     }

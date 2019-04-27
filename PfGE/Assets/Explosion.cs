@@ -17,7 +17,7 @@ public class Explosion : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(tf.position, 10);
         foreach(Collider c in hitColliders) {
         	if (c.gameObject.tag == "Pawn") {
-        		c.gameObject.GetComponent<Pawn>().TakeDamage(10);
+        		c.gameObject.GetComponent<Pawn>().TakeDamage(10f-Vector3.Distance(tf.position, c.gameObject.GetComponent<Transform>().position));
 				c.gameObject.GetComponent<Animator>().applyRootMotion = false;
         		c.gameObject.GetComponent<Rigidbody>().velocity += ((c.gameObject.transform.position+Vector3.up*1.5f)-tf.position).normalized*10;
 	        	c.gameObject.transform.position += Vector3.up*.45f;
@@ -28,6 +28,7 @@ public class Explosion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.instance.paused) return;
         if (time <= 0) {
         	Destroy(this.gameObject);
         } else {

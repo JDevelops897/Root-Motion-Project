@@ -16,6 +16,9 @@ public class Pawn : MonoBehaviour
 
 	public bool isGrounded = true;
 
+	public bool invincible;
+	public bool isPlayer = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +28,15 @@ public class Pawn : MonoBehaviour
     }
 
     void Update() {
-    	isGrounded = (Physics.Raycast(transform.position+transform.up*.1f, -transform.up, .35f));
+    	if (GameManager.instance.paused) {
+    		anim.enabled = false;
+    		rb.constraints = RigidbodyConstraints.FreezeAll;
+    		return;
+    	} else {
+    		anim.enabled = true;
+    		rb.constraints = RigidbodyConstraints.FreezeRotation;
+    	}
+    	isGrounded = (Physics.Raycast(transform.position+transform.up*.1f, -transform.up, .35f) || Physics.Raycast(transform.position+transform.up*.1f+transform.right*.2f, -transform.up, .35f) || Physics.Raycast(transform.position+transform.up*.1f-transform.right*.2f, -transform.up, .35f) || Physics.Raycast(transform.position+transform.up*.1f+transform.forward*.2f, -transform.up, .35f) || Physics.Raycast(transform.position+transform.up*.1f-transform.forward*.2f, -transform.up, .35f));
     	if (isGrounded) rb.velocity = Vector3.zero;
     	anim.applyRootMotion = isGrounded;
     }
@@ -44,7 +55,8 @@ public class Pawn : MonoBehaviour
     }
 
     public void Die() {
-    	Destroy(this.gameObject);
+    	if (!invincible)
+	    	Destroy(this.gameObject);
     }
 
     protected virtual void OnAnimatorIK() {

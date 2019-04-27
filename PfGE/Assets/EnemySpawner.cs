@@ -17,8 +17,11 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    	if (GameManager.instance.paused) return;
         if (bot == null) {
         	bot = Instantiate(botPrefab, transform);
+        } else {
+
         }
     }
 }

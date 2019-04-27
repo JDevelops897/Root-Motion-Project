@@ -32,6 +32,7 @@ public class WeaponAgent : MonoBehaviour
     	GameObject weapon = GameManager.instance.weaponPrefabs[(int) weaponID];
     	equippedWeaponObject = Instantiate(weapon);
     	equippedWeapon = equippedWeaponObject.GetComponent<Weapon>();
+    	equippedWeapon.pawn = this.gameObject;
     	equippedWeapon.type = weaponID;
     	equippedWeapon.gunObject = equippedWeaponObject;
 

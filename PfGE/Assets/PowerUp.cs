@@ -6,7 +6,8 @@ public class PowerUp : MonoBehaviour {
 
 	public enum powerUpType {
 		heal,
-		ammo
+		ammo, 
+		coin
 	}
 		
 	public GameObject spawner;
@@ -29,6 +30,7 @@ public class PowerUp : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (GameManager.instance.paused) return;
 		//constantly rotate and bob up and down
 		tf.position = new Vector3 (tf.position.x, tf.position.y + (Mathf.Sin(yPos)/100), tf.position.z);
 		tf.eulerAngles = new Vector3 (tf.eulerAngles.x, Time.frameCount+yPos, tf.eulerAngles.z);
@@ -36,7 +38,6 @@ public class PowerUp : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider c) {
-		//if a tank has triggered this
 		if (c.gameObject.tag == "Pawn") {
 			//activate the powerup of this type
 			switch (type) {
@@ -49,11 +50,27 @@ public class PowerUp : MonoBehaviour {
 					w.ammo = w.ammo*5;
 				}
 				break;
+			case powerUpType.coin:
+				if (c.gameObject.GetComponent<Pawn>().isPlayer) {
+					GameManager.instance.playerController.coins++;
+					if (GameManager.instance.playerController.coins >= 5) {
+						GameManager.instance.Win();
+					}
+				}				
+				break;
 			}
 			//set the spawner timer
-			spawner.GetComponent<PowerUpSpawner>().spawnTimer = 60*10;
-			spawner.GetComponent<PowerUpSpawner>().powerUpSpawned = false;
-			Destroy (this.gameObject);
+			if (spawner) {
+				spawner.GetComponent<PowerUpSpawner>().spawnTimer = 60*10;
+				spawner.GetComponent<PowerUpSpawner>().powerUpSpawned = false;
+			}
+			if (type == powerUpType.coin) {
+				if (c.gameObject.GetComponent<Pawn>().isPlayer) {
+					Destroy (this.gameObject);
+				}
+			} else {
+				Destroy (this.gameObject);
+			}
 		}
 	}
 }

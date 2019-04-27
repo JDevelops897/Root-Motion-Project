@@ -25,6 +25,10 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    	if (GameManager.instance.paused) {
+    		Cursor.visible = true;
+    		return;
+    	}
     	//keep the cursor invisible 
     	Cursor.visible = false;
 

@@ -33,6 +33,8 @@ public class Weapon : MonoBehaviour
 
 	public Renderer r;
 
+	public GameObject pawn;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +44,7 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    	if (GameManager.instance.paused) return;
         if (reloading) {
         	reloadTimer--;
         	if (reloadTimer < 0) {
@@ -74,7 +77,9 @@ public class Weapon : MonoBehaviour
     public void Fire() {
     	if (ammo > 0 && !reloading) {
     		ammo--;
-    		Instantiate(bullet, bulletPoint.position, gunObject.transform.rotation);
+    		GameObject b;
+    		b = Instantiate(bullet, bulletPoint.position, gunObject.transform.rotation);
+    		b.GetComponent<Projectile>().sender = pawn;
     	} else {
     		Reload();
     	}
